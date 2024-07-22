@@ -4,14 +4,15 @@ const sns = new AWS.SNS();
 exports.handler = async (event) => {
   const params = {
     Message: 'Incident occurred: ' + JSON.stringify(event),
-    TopicArn: process.env.SNS_TOPIC_ARN // Correctly reference the environment variable
+    TopicArn: "arn:aws:sns:us-east-2:339712707581:incident-alerts"
   };
 
   try {
     await sns.publish(params).promise();
-    console.log('Message sent to the topic');
+    console.log('test successful');
+    return 'Message sent successfully';
   } catch (error) {
-    console.error(error);
+    console.error('AWS Error:', error.message); 
     throw new Error('Error sending message to SNS');
   }
 };
